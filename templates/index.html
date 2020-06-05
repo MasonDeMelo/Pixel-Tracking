@@ -1,0 +1,23 @@
+<!-- index.html-->
+
+{% extends "base.html" %}
+{% block body %}
+<div class="jumbotron">
+  <h1>Track your emails and page hits!</h1>
+  <p class="lead">Create an invisible pixel to embed in your emails or on your website, and we'll let you know who sees it! Click the button below to get started, or peruse the existing pixels below.</p>
+  <p>
+    <a class="btn btn-lg btn-success" href="/pixel" role="button">New Pixel</a>
+  </p>
+  <div>
+    <img src="/pixel.gif?id=MQ==" />
+  </div>
+</div>
+<div>
+    <h3>Available Pixels</h3>
+    <ul>
+    {% for pixel in pixels|sort(attribute='id') %}
+        <li><a href="/pixel/{{ pixel.obfuscated_id }}">{{ pixel.name }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

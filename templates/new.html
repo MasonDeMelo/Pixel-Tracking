@@ -1,0 +1,35 @@
+<!-- new.html-->
+
+{% extends "base.html" %}
+{% block body %}
+<div class="jumbotron">
+    <h1>Create A New Pixel</h1>
+  <p class="lead">Enter the information about this pixel down below</p>
+</div>
+<div class="container">
+    <div class="row">
+        <form class="form-horizontal col-md-12" method="POST">
+            <!-- Form Name -->
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-6 control-label" for="pixel_name"><h4>Pixel Name:</h4></label>  
+                <div class="col-md-6">
+                    <input id="pixel_name" name="pixel_name" type="text" placeholder="'Email to Joey'" class="form-control input-md" required="">
+                    <span class="help-block" style="font-style:italic">A descriptive name for your new pixel.</span>  
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <div class="col-md-6">
+                    <input type=submit class="btn btn-primary">
+                    </input>
+                </div>
+            </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

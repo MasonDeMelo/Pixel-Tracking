@@ -1,0 +1,36 @@
+<!-- pixel.html-->
+
+{% extends "base.html" %}
+{% block body %}
+<div class="jumbotron">
+    <h1>Pixel: {{ pixel.name }}</h1>
+  <p class="lead">Use the following code to embed this pixel on your email or website:</p>
+  <p><code>&lt;img src=&quot;https://tracking.demelo.dev/pixel.gif?id={{ pixel.obfuscated_id }}&quot; /&gt;</code></p>
+</div>
+<div>
+    <h3>Hits on This Pixel: {{ pixel.hits | length }}</h3>
+    <script>
+		$(document).ready( function () {
+            $('#pixel_hit_info').DataTable({ "order": [[ 0, "desc" ]] });
+		} );
+	</script>
+    <table id="pixel_hit_info" class="display">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>User Agent</th>
+                <th>IP Address</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hit in pixel.hits %}
+        <tr>
+            <td>{{ hit.timestamp }}</td>
+            <td>{{ hit.userAgent }}</td>
+            <td>{{ hit.remoteAddr }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
