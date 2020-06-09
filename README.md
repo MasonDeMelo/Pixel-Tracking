@@ -20,4 +20,4 @@ Self-hosted pixel tracking.
 You are welcome to fork the project, but I likely won't be accepting pull requests at this time.
 This is just a fun side project to help me learn more about tracking on the web and learn more about some interesting technologies.
 
-My stance on this may change as the project matures, but for now I'd be most appreciative in the form of information about 
+My stance on this may change as the project matures.
