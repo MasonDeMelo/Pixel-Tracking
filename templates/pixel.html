@@ -5,7 +5,7 @@
 <div class="jumbotron">
     <h1>Pixel: {{ pixel.name }}</h1>
   <p class="lead">Use the following code to embed this pixel on your email or website:</p>
-  <p><code>&lt;img src=&quot;https://tracking.demelo.dev/pixel.gif?id={{ pixel.obfuscated_id }}&quot; /&gt;</code></p>
+  <p><code>&lt;img src=&quot;{{ pixel_url }}&quot; /&gt;</code></p>
 </div>
 <div>
     <h3>Hits on This Pixel: {{ pixel.hits | length }}</h3>

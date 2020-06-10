@@ -2,18 +2,26 @@
 
 import base64
 import datetime
+import configparser
+import sys
+
+import urllib.parse
 
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
-engine = create_engine('sqlite:////var/www/db/tracking.db')
+
+config = configparser.ConfigParser()
+config.read('./config.ini')
+
+engine = create_engine(config["Database"]["url"])
 Session = sessionmaker(bind=engine)
 
 from flask import Flask, Response, request, render_template, redirect
 app = Flask(__name__)
 
 from celery import Celery
-celery = Celery(app.name)
+celery = Celery(app.name, broker=config["RabbitMQ"]["url"])
 
 #Routes
 
@@ -62,8 +70,8 @@ def pixel_info(obfuscatedId=None):
         if (pixel is None):
             return Response("Pixel: " + str(deobfuscatedId) + " does not exist.")
         else:
-            pixel.obfuscated_id = obfuscate(pixel.id)
-            return render_template("pixel.html", pixel=pixel)
+            pixel_url = build_pixel_url(pixel.id)
+            return render_template("pixel.html", pixel=pixel, pixel_url=pixel_url)
     
 def obfuscate(id):
     return None if (id is None) else base64.b64encode(str(id).encode('ascii')).decode()
@@ -73,6 +81,12 @@ def deobfuscate(obfuscatedId):
         return None if (obfuscatedId is None) else int(base64.b64decode(bytes(obfuscatedId.encode())).decode())
     except:
         return None
+
+def build_pixel_url(id):
+    url = list(urllib.parse.urlparse(config['PixelTracker']['host']))
+    url[2] = "pixel.gif"
+    url[4] = urllib.parse.urlencode({'id': obfuscate(id)})
+    return urllib.parse.urlunparse(url)
 
 # Tasks
 

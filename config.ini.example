@@ -1,0 +1,8 @@
+[PixelTracker]
+host = https://mywebsite.com
+
+[RabbitMQ]
+url = amqp://localhost:5672//
+
+[Database]
+url = sqlite:////tracking.db
